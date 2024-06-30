@@ -43,11 +43,11 @@ app.post("/api/users", (req, res) => {
 });
 
 app.get("/api/users", (req, res) => {
-  User.find({}, 'uname _id')  // Only select 'uname' and '_id'
+  User.find({}, 'username _id')  // Only select 'uname' and '_id'
     .then(users => {
       // Map the result to format { username: user.uname, _id: user._id }
       const formattedUsers = users.map(user => ({
-        username: user.uname,
+        username: user.username,
         _id: user._id
       }));
       res.json(formattedUsers);
