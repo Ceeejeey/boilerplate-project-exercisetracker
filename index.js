@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use(cors())
 
 const userSchema = new mongoose.Schema({
-  uname: String
+  username: String
 })
 
 const exerciseSchema = new mongoose.Schema({
@@ -30,11 +30,11 @@ app.get('/', (req, res) => {
 });
 
 app.post("/api/users", (req, res) => {
-  const newUser = new User({ uname: req.body.username });
+  const newUser = new User({ username: req.body.username });
 
   newUser.save()
     .then((savedUser) => {
-      res.json({ username: savedUser.uname, _id: savedUser._id });
+      res.json({ username: savedUser.username, _id: savedUser._id });
     })
     .catch((err) => {
       console.error('Error saving user:', err);
@@ -66,7 +66,7 @@ app.post("/api/users/:_id/exercises", (req, res) => {
         .then(savedExercise => {
           res.json({
             _id: savedExercise.userId,
-            username: user.uname,
+            username: user.username,
             date: savedExercise.date.toDateString(),
             duration: savedExercise.duration,
             description: savedExercise.description
