@@ -43,9 +43,19 @@ app.post("/api/users", (req, res) => {
 });
 
 app.get("/api/users", (req, res) => {
-  User.find({})
-    .then(users => res.json(users))
-    .catch(err => res.status(500).json({ error: 'Internal server error' }));
+  User.find({}, 'uname _id')  // Only select 'uname' and '_id'
+    .then(users => {
+      // Map the result to format { username: user.uname, _id: user._id }
+      const formattedUsers = users.map(user => ({
+        username: user.uname,
+        _id: user._id
+      }));
+      res.json(formattedUsers);
+    })
+    .catch(err => {
+      console.error('Error fetching users:', err);
+      res.status(500).json({ error: 'Internal server error' });
+    });
 });
 
 app.post("/api/users/:_id/exercises", (req, res) => {
